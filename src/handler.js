@@ -50,8 +50,25 @@ const addBookHandler = (request, h) => {
     status: 'fail',
     message: 'Gagal menambahkan buku',
   });
-  response.code(400);
+  response.code(500);
   return response;
 };
 
-module.exports = addBookHandler;
+const getAllBooksHandler = (request, h) => {
+  const bookInfo = books.map((book) => ({
+    id: book.id,
+    name: book.name,
+    publisher: book.publisher,
+  }));
+
+  const response = h.response({
+    status: 'success',
+    data: {
+      books: bookInfo,
+    },
+  });
+  response.code(200);
+  return response;
+};
+
+module.exports = {addBookHandler, getAllBooksHandler};
